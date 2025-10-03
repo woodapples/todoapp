@@ -19,10 +19,10 @@ public class TodoResponseDTO {
     @Schema(description = "Unique identifier", example = "507f1f77bcf86cd799439011")
     public String id;
     
-    @Schema(description = "Todo title", example = "Einkaufen gehen")
+    @Schema(description = "Todo title", example = "Go shopping")
     public String title;
     
-    @Schema(description = "Todo description", example = "Milch, Brot, Eier")
+    @Schema(description = "Todo description", example = "Milk, Bred, Eggs")
     public String description;
     
     @Schema(description = "Completion status", example = "false")

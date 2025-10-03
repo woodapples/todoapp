@@ -20,13 +20,13 @@ import java.util.List;
 @Schema(description = "Todo creation request")
 public class TodoCreateDTO {
     
-    @NotBlank(message = "Title ist erforderlich")
-    @Size(min = 1, max = 200, message = "Title: 1-200 Zeichen")
-    @Schema(description = "Todo title", example = "Einkaufen gehen", required = true)
+    @NotBlank(message = "Title is required")
+    @Size(min = 1, max = 200, message = "Title: 1-200 Letters")
+    @Schema(description = "Todo title", example = "Go shopping", required = true)
     public String title;
     
-    @Size(max = 1000, message = "Description: max 1000 Zeichen")
-    @Schema(description = "Optional description", example = "Milch, Brot, Eier")
+    @Size(max = 1000, message = "Description: max 1000 Letters")
+    @Schema(description = "Optional description", example = "Milk, Bred, Eggs")
     public String description;
     
     @Schema(description = "Priority level", example = "HIGH")

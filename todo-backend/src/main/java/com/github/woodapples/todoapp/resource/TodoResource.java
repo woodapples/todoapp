@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 /**
@@ -33,10 +34,17 @@ import java.util.List;
 @Tag(name = "Todo Management", description = "CRUD operations for Todo items")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ApplicationScoped
 public class TodoResource {
     
     @Inject
     TodoService todoService;
+    
+    @GET
+    @Path("/test")
+    public String test() {
+        return "TodoResource is working!";
+    }
     
     @GET
     @Operation(summary = "Get all todos", description = "Retrieves all todo items with optional filtering")

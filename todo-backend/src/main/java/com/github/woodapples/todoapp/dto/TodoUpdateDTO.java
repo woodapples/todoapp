@@ -18,12 +18,12 @@ import java.util.List;
 @Schema(description = "Todo update request")
 public class TodoUpdateDTO {
     
-    @Size(min = 1, max = 200, message = "Title: 1-200 Zeichen")
-    @Schema(description = "Updated todo title", example = "Neue Einkaufsliste")
+    @Size(min = 1, max = 200, message = "Title: 1-200 Letters")
+    @Schema(description = "Updated todo title", example = "New Shoppinglist")
     public String title;
     
-    @Size(max = 1000, message = "Description: max 1000 Zeichen")
-    @Schema(description = "Updated description", example = "Milch, Brot, Eier, Käse")
+    @Size(max = 1000, message = "Description: max 1000 Letters")
+    @Schema(description = "Updated description", example = "Milk, Bred, Eggs, Cheese")
     public String description;
     
     @Schema(description = "Completion status", example = "true")
