@@ -23,8 +23,8 @@ public class Todo extends PanacheMongoEntity {
     public String description;
     public boolean completed = false;
     public Priority priority = Priority.MEDIUM;
-    public LocalDateTime createdAt = LocalDateTime.now();
-    public LocalDateTime updatedAt = LocalDateTime.now();
+    public LocalDateTime createdAt;
+    public LocalDateTime updatedAt;
     public LocalDateTime dueDate;
     public List<String> tags;
 
@@ -42,21 +42,31 @@ public class Todo extends PanacheMongoEntity {
     public Todo(String title, String description) {
         this.title = title;
         this.description = description;
+        this.prePersist();
+    }
+    
+    // Lifecycle Hook für Timestamps
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        if (this.createdAt == null) {
+            this.createdAt = now;
+        }
+        this.updatedAt = now;
     }
     
     // Business Logic Methods
     public void markCompleted() {
         this.completed = true;
-        this.updatedAt = LocalDateTime.now();
+        this.prePersist(); // Update timestamp
     }
     
     public void markIncomplete() {
         this.completed = false;
-        this.updatedAt = LocalDateTime.now();
+        this.prePersist(); // Update timestamp
     }
     
     public void updateModificationTime() {
-        this.updatedAt = LocalDateTime.now();
+        this.prePersist(); // Update timestamp
     }
     
     public boolean isOverdue() {

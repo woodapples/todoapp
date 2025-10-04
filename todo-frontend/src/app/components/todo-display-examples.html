@@ -1,0 +1,177 @@
+<!-- ===== TODO DISPLAY EXAMPLES ===== -->
+
+<!-- 1. CARD LAYOUT (Empfohlen für Todo-Apps) -->
+<div class="todo-container">
+  <h2>Todo Cards Layout</h2>
+  <div class="todo-grid">
+    <!-- Single Todo Card Example -->
+    <div class="todo-card">
+      <div class="todo-header">
+        <h3 class="todo-title">Website Design überarbeiten</h3>
+        <div class="todo-status">
+          <p-badge value="High" severity="danger" />
+          <p-tag value="Design" severity="info" />
+        </div>
+      </div>
+
+      <div class="todo-body">
+        <p class="todo-description">
+          Das aktuelle Website-Design muss modernisiert und für mobile Geräte
+          optimiert werden.
+        </p>
+
+        <div class="todo-meta">
+          <span class="todo-date">Erstellt: 04.10.2025</span>
+          <div class="todo-actions">
+            <p-button
+              icon="pi pi-check"
+              severity="success"
+              size="small"
+              [text]="true"
+              pTooltip="Als erledigt markieren"
+            />
+            <p-button
+              icon="pi pi-pencil"
+              severity="info"
+              size="small"
+              [text]="true"
+              pTooltip="Bearbeiten"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              size="small"
+              [text]="true"
+              pTooltip="Löschen"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Todo Card -->
+    <div class="todo-card completed">
+      <div class="todo-header">
+        <h3 class="todo-title">Dokumentation schreiben</h3>
+        <div class="todo-status">
+          <p-badge value="✓ Erledigt" severity="success" />
+          <p-tag value="Docs" severity="secondary" />
+        </div>
+      </div>
+
+      <div class="todo-body">
+        <p class="todo-description">
+          API-Dokumentation für das neue Backend erstellen.
+        </p>
+
+        <div class="todo-meta">
+          <span class="todo-date">Erledigt: 03.10.2025</span>
+          <div class="todo-actions">
+            <p-button
+              icon="pi pi-undo"
+              severity="secondary"
+              size="small"
+              [text]="true"
+              pTooltip="Wieder öffnen"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              size="small"
+              [text]="true"
+              pTooltip="Löschen"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. LIST LAYOUT (Kompakt) -->
+<div class="todo-container">
+  <h2>Todo List Layout</h2>
+  <div class="todo-list">
+    <div class="todo-list-item">
+      <p-checkbox class="todo-checkbox" [binary]="true" />
+      <div class="todo-content">
+        <div class="todo-title">Meeting vorbereiten</div>
+        <div class="todo-description">
+          Agenda und Präsentation für Kundentermin
+        </div>
+      </div>
+      <p-badge value="Urgent" severity="warning" />
+      <div class="todo-actions">
+        <p-button icon="pi pi-pencil" size="small" [text]="true" />
+        <p-button
+          icon="pi pi-trash"
+          size="small"
+          [text]="true"
+          severity="danger"
+        />
+      </div>
+    </div>
+
+    <div class="todo-list-item">
+      <p-checkbox class="todo-checkbox" [binary]="true" [ngModel]="true" />
+      <div class="todo-content">
+        <div class="todo-title">Code Review durchführen</div>
+        <div class="todo-description">Pull Request #123 überprüfen</div>
+      </div>
+      <p-badge value="✓ Done" severity="success" />
+      <div class="todo-actions">
+        <p-button icon="pi pi-undo" size="small" [text]="true" />
+        <p-button
+          icon="pi pi-trash"
+          size="small"
+          [text]="true"
+          severity="danger"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. PRIMENG DATAVIEW (Advanced) -->
+<div class="todo-container">
+  <h2>DataView Layout</h2>
+  <p-dataview [value]="todos" [layout]="'grid'">
+    <ng-template pTemplate="grid" let-todo>
+      <div class="todo-card" [ngClass]="{ completed: todo.completed }">
+        <div class="todo-header">
+          <h3 class="todo-title">{{ todo.title }}</h3>
+          <p-badge
+            [value]="todo.priority"
+            [severity]="getPrioritySeverity(todo.priority)"
+          />
+        </div>
+        <div class="todo-body">
+          <p class="todo-description">{{ todo.description }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataview>
+</div>
+
+<!-- 4. PANEL GROUPS (Kategorisiert) -->
+<div class="todo-container">
+  <h2>Panel Groups Layout</h2>
+
+  <p-panel header="🔥 Dringend" [toggleable]="true">
+    <div class="todo-list">
+      <!-- Dringende Todos hier -->
+    </div>
+  </p-panel>
+
+  <p-panel header="📝 In Arbeit" [toggleable]="true">
+    <div class="todo-list">
+      <!-- Todos in Bearbeitung hier -->
+    </div>
+  </p-panel>
+
+  <p-panel header="✅ Erledigt" [toggleable]="true" [collapsed]="true">
+    <div class="todo-list">
+      <!-- Erledigte Todos hier -->
+    </div>
+  </p-panel>
+</div>

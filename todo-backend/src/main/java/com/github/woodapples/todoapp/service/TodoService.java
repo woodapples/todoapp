@@ -9,7 +9,6 @@ import com.github.woodapples.todoapp.exception.TodoNotFoundException;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -81,9 +80,10 @@ public class TodoService {
      * @param createDto Data for new todo
      * @return Created todo as DTO
      */
-    @Transactional
+    // @Transactional // Removed for MongoDB Standalone (no Replica Set support)
     public TodoResponseDTO createTodo(TodoCreateDTO createDto) {
         Todo todo = todoMapper.toEntity(createDto);
+        todo.prePersist(); // Setzt Timestamps
         todo.persist();
         return todoMapper.toResponseDto(todo);
     }
@@ -95,7 +95,7 @@ public class TodoService {
      * @return Updated todo as DTO
      * @throws TodoNotFoundException if todo doesn't exist
      */
-    @Transactional
+    // @Transactional // Removed for MongoDB Standalone (no Replica Set support)
     public TodoResponseDTO updateTodo(String id, TodoUpdateDTO updateDto) {
         Todo existingTodo = findTodoById(id);
         todoMapper.updateEntityFromDto(updateDto, existingTodo);
@@ -110,7 +110,7 @@ public class TodoService {
      * @return Updated todo as DTO
      * @throws TodoNotFoundException if todo doesn't exist
      */
-    @Transactional
+    // @Transactional // Removed for MongoDB Standalone (no Replica Set support)
     public TodoResponseDTO completeTodo(String id) {
         Todo todo = findTodoById(id);
         todo.markCompleted();
@@ -123,7 +123,7 @@ public class TodoService {
      * @param id Todo ID
      * @throws TodoNotFoundException if todo doesn't exist
      */
-    @Transactional
+    // @Transactional // Removed for MongoDB Standalone (no Replica Set support)
     public void deleteTodo(String id) {
         Todo todo = findTodoById(id);
         todo.delete();
