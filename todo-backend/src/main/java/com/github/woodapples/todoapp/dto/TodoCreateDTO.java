@@ -32,13 +32,6 @@ public class TodoCreateDTO {
     @Schema(description = "Priority level", example = "HIGH")
     public Priority priority = Priority.MEDIUM;
     
-    @Future(message = "Due date must be in future")
-    @Schema(description = "Optional due date", example = "2025-10-03T18:00:00")
-    public LocalDateTime dueDate;
-    
-    @Schema(description = "Tags for categorization", example = "[\"shopping\", \"urgent\"]")
-    public List<String> tags;
-    
     // Konstruktoren
     public TodoCreateDTO() {}
     

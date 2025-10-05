@@ -1,0 +1,38 @@
+<div class="filter-container">
+  <div class="filter-buttons">
+    <button
+      class="filter-btn"
+      [class.active]="activeFilter === 'all'"
+      (click)="setFilter('all')"
+    >
+      All ({{ todos.length }})
+    </button>
+    <button
+      class="filter-btn"
+      [class.active]="activeFilter === 'active'"
+      (click)="setFilter('active')"
+    >
+      Active ({{ activeTodos.length }})
+    </button>
+    <button
+      class="filter-btn"
+      [class.active]="activeFilter === 'completed'"
+      (click)="setFilter('completed')"
+    >
+      Completed ({{ completedTodos.length }})
+    </button>
+  </div>
+
+  <div class="priority-filter">
+    <select
+      [(ngModel)]="priorityFilter"
+      (change)="onPriorityFilterChange()"
+      class="priority-select"
+    >
+      <option value="URGENT">Urgent</option>
+      <option value="HIGH">High</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="LOW">Low</option>
+    </select>
+  </div>
+</div>

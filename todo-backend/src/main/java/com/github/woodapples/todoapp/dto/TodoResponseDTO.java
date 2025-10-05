@@ -36,20 +36,6 @@ public class TodoResponseDTO {
     @Schema(description = "Last update timestamp", example = "2025-10-02T15:45:00")
     public LocalDateTime updatedAt;
     
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Schema(description = "Due date", example = "2025-10-03T18:00:00")
-    public LocalDateTime dueDate;
-    
     @Schema(description = "Todo priority", example = "MEDIUM")
     public Priority priority;
-    
-    @Schema(description = "Category tags", example = "[\"shopping\", \"personal\"]")
-    public List<String> tags;
-    
-    // Computed Fields
-    @Schema(description = "Whether todo is overdue", example = "false")
-    public boolean overdue;
-    
-    @Schema(description = "Days until due date", example = "3")
-    public Long daysUntilDue;
 }

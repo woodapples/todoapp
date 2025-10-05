@@ -32,12 +32,6 @@ public class TodoUpdateDTO {
     @Schema(description = "Updated priority level", example = "HIGH")
     public Priority priority;
     
-    @Schema(description = "Updated due date", example = "2025-10-05T20:00:00")
-    public LocalDateTime dueDate;
-    
-    @Schema(description = "Updated tags", example = "[\"shopping\", \"weekly\"]")
-    public List<String> tags;
-    
     // Konstruktoren
     public TodoUpdateDTO() {}
     

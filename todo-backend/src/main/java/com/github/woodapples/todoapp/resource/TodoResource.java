@@ -62,14 +62,7 @@ public class TodoResource {
         }
         return todoService.getAllTodos();
     }
-    
-    @GET
-    @Path("/overdue")
-    @Operation(summary = "Get overdue todos")
-    public List<TodoResponseDTO> getOverdueTodos() {
-        return todoService.getOverdueTodos();
-    }
-    
+   
     @GET
     @Path("/search")
     @Operation(summary = "Search todos by title")
@@ -79,14 +72,7 @@ public class TodoResource {
         }
         return todoService.searchTodos(searchTerm);
     }
-    
-    @GET
-    @Path("/tag/{tag}")
-    @Operation(summary = "Get todos by tag")
-    public List<TodoResponseDTO> getTodosByTag(@PathParam("tag") String tag) {
-        return todoService.getTodosByTag(tag);
-    }
-    
+   
     @GET
     @Path("/{id}")
     @Operation(summary = "Get todo by ID")

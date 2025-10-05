@@ -25,8 +25,6 @@ public class TodoMapper {
         todo.title = dto.title;
         todo.description = dto.description;
         todo.priority = dto.priority != null ? dto.priority : Todo.Priority.MEDIUM;
-        todo.dueDate = dto.dueDate;
-        todo.tags = dto.tags;
         return todo;
     }
     
@@ -39,13 +37,6 @@ public class TodoMapper {
         dto.priority = entity.priority;
         dto.createdAt = entity.createdAt;
         dto.updatedAt = entity.updatedAt;
-        dto.dueDate = entity.dueDate;
-        dto.tags = entity.tags;
-        
-        // Computed Fields
-        dto.overdue = entity.isOverdue();
-        dto.daysUntilDue = calculateDaysUntilDue(entity.dueDate);
-        
         return dto;
     }
     
@@ -59,19 +50,8 @@ public class TodoMapper {
         if (dto.priority != null) {
             entity.priority = dto.priority;
         }
-        if (dto.dueDate != null) {
-            entity.dueDate = dto.dueDate;
-        }
-        if (dto.tags != null) {
-            entity.tags = dto.tags;
-        }
         if (dto.completed != null) {
             entity.completed = dto.completed;
         }
-    }
-    
-    private Long calculateDaysUntilDue(LocalDateTime dueDate) {
-        if (dueDate == null) return null;
-        return ChronoUnit.DAYS.between(LocalDateTime.now(), dueDate);
     }
 }

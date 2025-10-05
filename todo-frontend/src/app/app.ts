@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { InputField } from './components/input-field/input-field';
+import { TodoPage } from './todo-page/todo-page';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, InputField],
+  imports: [TodoPage],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
 })

@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0;
+}
+
+.header-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.header-content h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.header-content p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1rem;
+}

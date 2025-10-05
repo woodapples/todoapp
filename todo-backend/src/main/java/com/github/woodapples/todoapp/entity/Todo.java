@@ -25,8 +25,6 @@ public class Todo extends PanacheMongoEntity {
     public Priority priority = Priority.MEDIUM;
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;
-    public LocalDateTime dueDate;
-    public List<String> tags;
 
     public enum Priority {
         LOW(1), MEDIUM(2), HIGH(3), URGENT(4);
@@ -69,25 +67,13 @@ public class Todo extends PanacheMongoEntity {
         this.prePersist(); // Update timestamp
     }
     
-    public boolean isOverdue() {
-        return dueDate != null && dueDate.isBefore(LocalDateTime.now()) && !completed;
-    }
-    
     // Custom Queries als Static Methods
     public static List<Todo> findByCompleted(boolean completed) {
         return find("completed", completed).list();
     }
     
-    public static List<Todo> findOverdue() {
-        return find("dueDate < ?1 and completed = false", LocalDateTime.now()).list();
-    }
-    
     public static List<Todo> findByPriorityOrderedByDueDate(Priority priority) {
         return find("priority = ?1", Sort.by("dueDate"), priority).list();
-    }
-    
-    public static List<Todo> findByTag(String tag) {
-        return find("tags", tag).list();
     }
     
     public static List<Todo> findByTitleContaining(String searchTerm) {

@@ -1,0 +1,20 @@
+<div class="page-container">
+  <app-header></app-header>
+
+  <div class="page-content">
+    <app-input-field (todoCreated)="onTodoCreated($event)"></app-input-field>
+    <app-filter-field
+      [todos]="todos()"
+      (filterChanged)="onFilterChanged($event)"
+    ></app-filter-field>
+    <app-item-field
+      [todos]="filteredTodos()"
+      [loading]="loading()"
+      (todoCompleted)="onTodoCompleted($event)"
+      (todoDeleted)="onTodoDeleted($event)"
+    >
+    </app-item-field>
+  </div>
+</div>
+
+<p-toast></p-toast>
