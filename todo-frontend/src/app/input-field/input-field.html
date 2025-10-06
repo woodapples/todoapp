@@ -3,8 +3,7 @@
     label="Create New Task"
     icon="pi pi-plus"
     (onClick)="showDialog()"
-    styleClass="add-button p-button-lg"
-    size="large"
+    styleClass="add-button"
   >
   </p-button>
 </div>
@@ -17,12 +16,11 @@
   [resizable]="false"
   header="Create New Task"
   styleClass="create-task-dialog"
-  [style]="{ width: '500px', minWidth: '300px' }"
   (onHide)="hideDialog()"
 >
   <div class="dialog-content">
     <div class="input-group">
-      <p-floatLabel styleClass="input-float-label">
+      <p-floatLabel variant="on" styleClass="input-float-label">
         <input
           id="title_input"
           type="text"
@@ -38,7 +36,7 @@
     </div>
 
     <div class="input-group">
-      <p-floatLabel styleClass="input-float-label">
+      <p-floatLabel variant="on" styleClass="input-float-label">
         <textarea
           id="description_input"
           pInputTextarea
@@ -54,18 +52,18 @@
     </div>
 
     <div class="input-group">
-      <p-floatLabel styleClass="input-float-label">
-        <p-select
+      <p-floatLabel variant="on" styleClass="input-float-label">
+        <p-selectButton
           id="priority_select"
           [(ngModel)]="selectedCategory"
           [options]="categories"
           optionLabel="label"
           optionValue="value"
           placeholder="Select Priority"
+          fluid
           styleClass="input-field"
-          [style]="{ minHeight: '3rem', width: '100%' }"
         >
-        </p-select>
+        </p-selectButton>
         <label for="priority_select" class="input-label">Priority Level</label>
       </p-floatLabel>
     </div>
@@ -81,6 +79,7 @@
         size="large"
       >
       </p-button>
+
       <p-button
         label="Create Task"
         icon="pi pi-check"

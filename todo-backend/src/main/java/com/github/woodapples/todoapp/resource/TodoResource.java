@@ -47,6 +47,27 @@ public class TodoResource {
     }
     
     @GET
+    @Path("/debug/{id}")
+    @Operation(summary = "Debug todo by ID")
+    public Response debugTodo(@PathParam("id") String id) {
+        try {
+            System.out.println("=== DEBUG ENDPOINT CALLED ===");
+            System.out.println("ID parameter: " + id);
+            
+            TodoResponseDTO todo = todoService.getTodoById(id);
+            System.out.println("Todo found: " + todo.id + " - " + todo.title);
+            
+            return Response.ok(todo).build();
+        } catch (Exception e) {
+            System.err.println("Debug endpoint error: " + e.getMessage());
+            e.printStackTrace();
+            return Response.status(500)
+                .entity("Debug error: " + e.getMessage())
+                .build();
+        }
+    }
+    
+    @GET
     @Operation(summary = "Get all todos", description = "Retrieves all todo items with optional filtering")
     @APIResponse(responseCode = "200", description = "List of todos", 
                 content = @Content(schema = @Schema(implementation = TodoResponseDTO.class)))
@@ -104,8 +125,22 @@ public class TodoResource {
     @PATCH
     @Path("/{id}/complete")
     @Operation(summary = "Mark todo as completed")
-    public TodoResponseDTO completeTodo(@PathParam("id") String id) {
-        return todoService.completeTodo(id);
+    public Response completeTodo(@PathParam("id") String id) {
+        try {
+            System.out.println("=== COMPLETE ENDPOINT CALLED ===");
+            System.out.println("ID parameter: " + id);
+            
+            TodoResponseDTO result = todoService.completeTodo(id);
+            System.out.println("Complete operation successful");
+            
+            return Response.ok(result).build();
+        } catch (Exception e) {
+            System.err.println("Complete endpoint error: " + e.getMessage());
+            e.printStackTrace();
+            return Response.status(500)
+                .entity("Complete error: " + e.getMessage())
+                .build();
+        }
     }
     
     @DELETE
@@ -114,7 +149,20 @@ public class TodoResource {
     @APIResponse(responseCode = "204", description = "Todo deleted successfully")
     @APIResponse(responseCode = "404", description = "Todo not found")
     public Response deleteTodo(@PathParam("id") String id) {
-        todoService.deleteTodo(id);
-        return Response.noContent().build();
+        try {
+            System.out.println("=== DELETE ENDPOINT CALLED ===");
+            System.out.println("ID parameter: " + id);
+            
+            todoService.deleteTodo(id);
+            System.out.println("Delete operation successful");
+            
+            return Response.noContent().build();
+        } catch (Exception e) {
+            System.err.println("Delete endpoint error: " + e.getMessage());
+            e.printStackTrace();
+            return Response.status(500)
+                .entity("Delete error: " + e.getMessage())
+                .build();
+        }
     }
 }

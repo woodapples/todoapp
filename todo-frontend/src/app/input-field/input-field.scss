@@ -1,267 +1,340 @@
 .input-container {
   display: flex;
   justify-content: center;
-  padding: 32px 24px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.add-button {
-  padding: 16px 32px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: var(--space-24); // Großzügiger Abstand für bessere UX
+  margin: var(--space-24);
+}
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+:host ::ng-deep .add-button {
+  background-color: var(--primary) !important; // DEINE PRIMARY FARBE: #56778c
+  background: var(--primary) !important; // BACKUP
+  color: white !important; // WEIßER TEXT für Kontrast
+  border: none !important;
+  border-radius: var(--space-6) !important;
+  font-weight: 500 !important;
+  padding: var(--space-12) var(--space-24) !important;
+  transition: all 0.2s ease !important;
+
+  &:hover:not(:disabled) {
+    background-color: var(
+      --secondary
+    ) !important; // DEINE SECONDARY FARBE: #3a5b70
+    background: var(--secondary) !important; // BACKUP
+    transform: translateY(-var(--space-1)) !important;
+  }
+
+  // Icon und Label
+  .p-button-icon {
+    color: white !important; // WEIß für Kontrast
+    margin-right: var(--space-8) !important;
+  }
+
+  .p-button-label {
+    color: white !important; // WEIß für Kontrast
+    font-weight: 500 !important;
   }
 }
 
-// PrimeNG Dialog Customization
-::ng-deep {
-  .create-task-dialog {
-    .p-dialog-header {
-      padding: 24px 24px 20px;
-      background: linear-gradient(
-        135deg,
-        var(--primary-50) 0%,
-        var(--primary-100) 100%
-      );
-      border-bottom: 1px solid var(--surface-200);
+// Globale PrimeNG Input-Styles
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-inputtextarea {
+  background: var(--bg) !important; // Weißer Hintergrund
+  color: var(--text) !important; // Dunkler Text
+  border: var(--space-2) solid var(--border) !important;
+  border-radius: var(--space-8) !important;
 
-      .p-dialog-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--primary-700);
-      }
-    }
-
-    .p-dialog-content {
-      padding: 24px;
-      background: var(--surface-0);
-    }
-
-    .p-dialog-footer {
-      padding: 0;
-      border-top: 1px solid var(--surface-200);
-      background: var(--surface-50);
-    }
+  &:focus {
+    background: var(--bg) !important; // Bleibt weiß
+    color: var(--text) !important; // Bleibt dunkel
+    border-color: var(--primary) !important;
   }
 
-  // Input field spacing and styling
-  .input-group {
-    margin-bottom: 24px;
-    width: 100%;
-
-    .input-float-label {
-      width: 100%;
-
-      .input-field {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 8px;
-        border: 2px solid var(--surface-300);
-        transition: all 0.3s ease;
-
-        &:focus {
-          border-color: var(--primary-500);
-          box-shadow: 0 0 0 2px var(--primary-100);
-        }
-      }
-
-      .input-label {
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        color: var(--text-color-secondary);
-
-        &.p-float-label-active {
-          color: var(--primary-600);
-          font-weight: 500;
-        }
-      }
-    }
-  }
-
-  // Dialog footer styling
-  .dialog-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 24px;
-
-    .cancel-button {
-      &:hover {
-        background: var(--surface-100);
-      }
-    }
-
-    .create-button {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-      &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      }
-    }
-  }
-
-  // Button styling
-  .p-button-lg {
-    padding: 12px 24px;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+  &::placeholder {
+    color: var(--text-light) !important; // Hellerer Placeholder
   }
 }
 
-.dialog-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
+// FloatLabel Fix
+:host ::ng-deep .p-float-label label {
+  background: var(--bg) !important; // Weißer Hintergrund für Label
+  color: var(--text-light) !important; // Helle Farbe
 
-.dialog {
-  background: white;
-  border-radius: 8px;
-  width: 500px;
-  max-width: 90vw;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.dialog-header {
-  padding: 20px 24px 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h3 {
-    margin: 0;
-    color: var(--text);
-    font-size: 1.2rem;
-    font-weight: 600;
+  &.p-float-label-active {
+    color: var(--primary) !important; // Primary bei Fokus
   }
+}
 
-  .close-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Globale PrimeNG Dialog Styling - Weiße Hintergründe */
+:host ::ng-deep .p-dialog-mask {
+  background: rgba(
+    1,
+    3,
+    38,
+    0.4
+  ) !important; // Dunklerer Overlay mit primary color
+}
 
-    &:hover {
+:host ::ng-deep .p-dialog {
+  background: white !important; // Weißer Dialog-Hintergrund
+  border-radius: var(--space-12) !important;
+  box-shadow: 0 var(--space-16) var(--space-48) rgba(0, 0, 0, 0.2) !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-dialog-header {
+  background: white !important; // Weißer Header
+  border-bottom: var(--space-1) solid var(--border) !important;
+  padding: var(--space-20) var(--space-24) !important;
+
+  .p-dialog-title {
+    color: var(--text) !important; // Dunkler Text
+    font-size: var(--font-size-lg) !important;
+    font-weight: 600 !important;
+  }
+}
+
+:host ::ng-deep .p-dialog-content {
+  background: white !important; // Weißer Content-Bereich
+  padding: var(--space-24) !important;
+}
+
+:host ::ng-deep .p-dialog-footer {
+  background: white !important; // Weißer Footer
+  border-top: var(--space-1) solid var(--border) !important;
+  padding: var(--space-20) var(--space-24) !important;
+}
+
+.create-task-dialog.p-dialog {
+  width: 95vw !important; // Gesamte Fläche ausfüllen
+  max-width: 60rem !important; // Max 960px
+  height: 90vh !important; // 90% der Viewport-Höhe
+  max-height: 90vh !important;
+
+  .p-dialog-header {
+    background: var(--bg); // Weißer Hintergrund
+    border-bottom: var(--space-1) solid var(--border);
+    padding: var(--space-16); // Kleinere Abstände
+
+    .p-dialog-title {
       color: var(--text);
+      font-size: var(--font-size-lg); // Kleinere Überschrift
+      font-weight: 500; // Weniger bold
+      margin: 0;
     }
+  }
+
+  .p-dialog-content {
+    padding: var(--space-24); // Großzügiger Padding
+    background: var(--bg); // Weißer Hintergrund
+    height: 100%; // Volle Höhe nutzen
+    overflow-y: auto;
+  }
+
+  .p-dialog-footer {
+    padding: var(--space-16); // Kleinere Abstände
+    border-top: var(--space-1) solid var(--border);
+    background: var(--bg); // Weißer Hintergrund
   }
 }
 
 .dialog-content {
-  padding: 24px;
-}
-
-.input-group {
-  margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--text);
-    font-weight: 500;
-    font-size: 0.9rem;
-  }
-
-  input,
-  textarea,
-  select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 1rem;
-    font-family: inherit;
-    transition: border-color 0.2s;
-
-    &:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    &::placeholder {
-      color: var(--text-light);
-    }
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-}
-
-.dialog-footer {
-  padding: 16px 24px 24px;
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+  flex-direction: column;
+  gap: var(--space-24); // Großzügige Abstände
 
-  .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s;
+  .input-group {
+    margin-bottom: var(--space-8);
+
+    .input-float-label {
+      width: 100%;
+      position: relative;
+
+      .input-field {
+        width: 100%;
+        padding: var(--space-20) var(--space-24); // Großzügiges Padding
+        border: var(--space-2) solid var(--border);
+        border-radius: var(--space-8) !important; // Abgerundete Ecken
+        font-size: var(--font-size-lg) !important; // Größere Schrift
+        background: var(--bg) !important;
+        color: var(--text) !important;
+        transition: all 0.3s ease !important;
+        min-height: var(--space-48) !important;
+        box-shadow: 0 var(--space-2) var(--space-8) rgba(0, 0, 0, 0.05) !important; // Subtiler Schatten
+
+        &:focus {
+          outline: none !important;
+          border-color: var(--primary) !important;
+          box-shadow: 0 0 0 var(--space-3) rgba(86, 119, 140, 0.2) !important; // Fokus-Ring
+          transform: translateY(-var(--space-1)) !important; // Leichtes Anheben
+        }
+
+        &:hover {
+          border-color: var(--text-light) !important;
+          box-shadow: 0 var(--space-4) var(--space-12) rgba(0, 0, 0, 0.1) !important;
+        }
+
+        // Textarea größer und schöner
+        &.p-inputtextarea {
+          resize: vertical;
+          min-height: 8rem !important; // 128px - doppelt so groß wie var(--space-64)
+          line-height: 1.6 !important;
+        }
+      }
+
+      .input-label {
+        position: absolute;
+        left: var(--space-24);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light) !important;
+        font-size: var(--font-size-base) !important;
+        font-weight: 500 !important;
+        background: var(--bg) !important;
+        padding: 0 var(--space-8) !important;
+        transition: all 0.3s ease !important;
+        pointer-events: none;
+
+        // Aktiver Zustand - schöne Animation
+        .p-float-label-active &,
+        .input-field:focus + &,
+        .input-field:not(:placeholder-shown) + & {
+          top: 0;
+          left: var(--space-20);
+          font-size: var(--font-size-sm) !important;
+          color: var(--primary) !important;
+          font-weight: 600 !important;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}
+
+// Priority Buttons - Alle in Primary-Farbe
+:host ::ng-deep .input-field.p-selectbutton {
+  display: flex !important;
+  gap: var(--space-8) !important;
+  flex-wrap: wrap !important;
+
+  .p-button {
+    flex: 1 !important;
+    min-width: 5rem !important;
+    padding: var(--space-12) var(--space-16) !important;
+    border: var(--space-2) solid var(--border) !important;
+    border-radius: var(--space-6) !important;
+    background: var(--bg) !important; // Weißer Hintergrund
+    color: var(--text) !important; // Dunkler Text
+    font-size: var(--font-size-sm) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 var(--space-2) var(--space-6) rgba(0, 0, 0, 0.05) !important;
+
+    &:hover {
+      border-color: var(--primary) !important;
+      background: rgba(86, 119, 140, 0.05) !important;
+      transform: translateY(-var(--space-1)) !important;
+      box-shadow: 0 var(--space-4) var(--space-12) rgba(0, 0, 0, 0.1) !important;
+    }
+
+    &.p-highlight {
+      background: var(--primary) !important; // Primary-Farbe bei Auswahl
+      border-color: var(--primary) !important;
+      color: white !important; // Weißer Text bei Auswahl
+      box-shadow: 0 var(--space-4) var(--space-16) rgba(86, 119, 140, 0.3) !important;
+    }
+  }
+}
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-12); // Etwas mehr Abstand
+
+  .cancel-button.p-button {
+    background: var(--bg) !important; // Weißer Hintergrund
+    color: var(--text-light) !important; // Hellgrauer Text
+    border: var(--space-2) solid var(--border) !important;
+    padding: var(--space-12) var(--space-20) !important;
+    border-radius: var(--space-8) !important; // Abgerundet
+    font-weight: 500 !important;
+    font-size: var(--font-size-base) !important;
+    min-height: var(--space-40) !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 var(--space-2) var(--space-6) rgba(0, 0, 0, 0.05) !important;
+
+    &:hover {
+      background: var(--bg-light) !important; // Leicht grauer Hintergrund
+      border-color: var(--primary) !important; // Primary Border
+      color: var(--primary) !important; // Primary Text
+      transform: translateY(-var(--space-1)) !important;
+      box-shadow: 0 var(--space-4) var(--space-12) rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  .create-button.p-button {
+    background: var(--primary) !important; // Primary-Farbe
+    color: white !important; // Weißer Text
+    border: none !important;
+    padding: var(--space-12) var(--space-20) !important;
+    border-radius: var(--space-8) !important; // Abgerundet
+    font-weight: 600 !important; // Etwas fetter
+    font-size: var(--font-size-base) !important;
+    min-height: var(--space-40) !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 var(--space-4) var(--space-12) rgba(86, 119, 140, 0.3) !important; // Primary Schatten
+
+    &:hover:not(:disabled) {
+      background: var(--secondary) !important; // Secondary bei Hover
+      transform: translateY(-var(--space-2)) !important;
+      box-shadow: 0 var(--space-8) var(--space-20) rgba(86, 119, 140, 0.4) !important;
+    }
 
     &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+      background: var(--border) !important; // Grauer disabled state
+      color: var(--text-light) !important;
+      cursor: not-allowed !important;
+      opacity: 0.6;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 48rem) {
+  .create-task-dialog.p-dialog {
+    width: 98vw !important; // Fast vollständige Breite auf Mobile
+    height: 95vh !important; // 95% Höhe
+
+    .p-dialog-content {
+      padding: var(--space-16); // Weniger Padding
     }
 
-    &.primary {
-      background: var(--primary);
-      color: white;
-
-      &:not(:disabled):hover {
-        opacity: 0.9;
-      }
+    .p-dialog-header,
+    .p-dialog-footer {
+      padding: var(--space-12); // Weniger Padding
     }
 
-    &.secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
+    .dialog-footer {
+      flex-direction: column-reverse; // Buttons untereinander
+      gap: var(--space-6);
 
-      &:hover {
-        background: var(--bg-light);
+      .p-button {
+        width: 100%; // Buttons volle Breite
+        min-height: var(--space-40); // Etwas höher auf Mobile
       }
+    }
+  }
+
+  .dialog-content {
+    gap: var(--space-16); // Kleinere Abstände auf Mobile
+
+    .input-field {
+      font-size: var(
+        --font-size-base
+      ) !important; // Standard-Schrift auf Mobile
+      padding: var(--space-12) var(--space-16) !important;
     }
   }
 }

@@ -29,8 +29,13 @@ public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
             return createValidationErrorResponse((ConstraintViolationException) exception);
         }
         
-        // Log unexpected exceptions
+        if (exception instanceof IllegalArgumentException) {
+            return createErrorResponse(400, "Bad Request", exception.getMessage());
+        }
+        
+        // Log unexpected exceptions mit Stack Trace
         System.err.println("Unexpected exception: " + exception.getMessage());
+        exception.printStackTrace();
         return createErrorResponse(500, "Internal Server Error", "An unexpected error occurred");
     }
     

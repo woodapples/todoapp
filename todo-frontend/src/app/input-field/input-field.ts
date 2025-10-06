@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { SelectModule } from 'primeng/select';
 import { DialogModule } from 'primeng/dialog';
 import { TodoCreate } from '../models/todo.interface';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-input-field',
@@ -19,13 +20,13 @@ import { TodoCreate } from '../models/todo.interface';
     TextareaModule,
     ButtonModule,
     FloatLabelModule,
-    SelectModule,
     DialogModule,
+    SelectButtonModule,
   ],
   templateUrl: './input-field.html',
   styleUrls: ['./input-field.scss'],
 })
-export class InputField {
+export class InputField implements OnInit {
   @Output() todoCreated = new EventEmitter<TodoCreate>();
 
   title = '';
@@ -39,12 +40,21 @@ export class InputField {
   selectedCategory: string = 'MEDIUM';
   visible: boolean = false;
 
+  ngOnInit(): void {}
   showDialog() {
     this.visible = true;
   }
 
   hideDialog() {
     this.visible = false;
+  }
+
+  // Dynamische
+  // Optional: Resize-Listener für dynamische Anpassungen
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    // Dialog-Größen werden automatisch neu berechnet bei Resize
+    // durch die getDialogStyle() Funktion
   }
 
   addTodo() {

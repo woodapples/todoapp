@@ -100,7 +100,8 @@ public class TodoService {
         Todo existingTodo = findTodoById(id);
         todoMapper.updateEntityFromDto(updateDto, existingTodo);
         existingTodo.updateModificationTime();
-        existingTodo.persist();
+        // Für MongoDB ohne Transaktionen explizit updaten
+        existingTodo.update();
         return todoMapper.toResponseDto(existingTodo);
     }
     
@@ -114,7 +115,7 @@ public class TodoService {
     public TodoResponseDTO completeTodo(String id) {
         Todo todo = findTodoById(id);
         todo.markCompleted();
-        todo.persist();
+        todo.update(); // Explicit update for MongoDB without transactions
         return todoMapper.toResponseDto(todo);
     }
     

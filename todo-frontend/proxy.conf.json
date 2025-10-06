@@ -4,6 +4,7 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
+    "bypass": null,
     "headers": {
       "Accept": "application/json",
       "Content-Type": "application/json"

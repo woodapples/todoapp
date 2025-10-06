@@ -127,83 +127,99 @@ export class TodoPage implements OnInit {
   }
 
   onTodoCompleted(todoId: string) {
-    console.log('Attempting to complete todo with ID:', todoId);
+    console.log('=== TODO COMPLETE DEBUG ===');
+    console.log('Todo ID:', todoId);
+    console.log('Todo ID type:', typeof todoId);
     console.log('Current todos:', this.todos());
+
     const todoToComplete = this.todos().find((t) => t.id === todoId);
     console.log('Todo to complete:', todoToComplete);
 
-    // First test if we can fetch the todo by ID
-    console.log('Testing GET by ID first...');
-    this.todoService.getById(todoId).subscribe({
-      next: (fetchedTodo) => {
-        console.log('Successfully fetched todo by ID:', fetchedTodo);
+    if (!todoToComplete) {
+      console.error('Todo not found in local state!');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Task not found in local state.',
+        life: 5000,
+      });
+      return;
+    }
 
-        // Now try to complete it
-        console.log('Now attempting to complete...');
-        this.todoService.complete(todoId).subscribe({
+    // Direkt complete versuchen ohne GET
+    console.log('Sending PATCH complete request...');
+    this.todoService.complete(todoId).subscribe({
+      next: (updatedTodo) => {
+        console.log('✅ Todo completed successfully:', updatedTodo);
+        this.todos.update((todos: Todo[]) =>
+          todos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
+        );
+        this.applyCurrentFilter();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Task Completed',
+          detail: `"${updatedTodo.title}" marked as completed!`,
+          life: 3000,
+        });
+      },
+      error: (error) => {
+        console.error('❌ PATCH complete failed:', error);
+        console.log('Trying PUT fallback...');
+
+        // Fallback: PUT method
+        this.todoService.completeWithPut(todoId).subscribe({
           next: (updatedTodo) => {
-            console.log('Todo completed successfully:', updatedTodo);
+            console.log('✅ Todo completed with PUT:', updatedTodo);
             this.todos.update((todos: Todo[]) =>
               todos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
             );
             this.applyCurrentFilter();
             this.messageService.add({
-              severity: 'info',
+              severity: 'success',
               summary: 'Task Completed',
-              detail: 'Task marked as completed!',
+              detail: `"${updatedTodo.title}" marked as completed!`,
               life: 3000,
             });
           },
-          error: (error) => {
-            console.error('PATCH complete failed, trying PUT method...');
-            console.error('PATCH error:', error);
-
-            // Fallback: try using PUT to update the completed status
-            this.todoService.completeWithPut(todoId).subscribe({
-              next: (updatedTodo) => {
-                console.log(
-                  'Todo completed successfully with PUT:',
-                  updatedTodo
-                );
-                this.todos.update((todos: Todo[]) =>
-                  todos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
-                );
-                this.applyCurrentFilter();
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'Task Completed',
-                  detail: 'Task marked as completed!',
-                  life: 3000,
-                });
-              },
-              error: (putError) => {
-                console.error('PUT complete also failed:', putError);
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Error',
-                  detail: `Failed to mark task as completed. Status: ${error.status}`,
-                  life: 5000,
-                });
-              },
+          error: (putError) => {
+            console.error('❌ PUT complete also failed:', putError);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Failed to mark task as completed. Error: ${
+                putError.message || putError.status || 'Unknown error'
+              }`,
+              life: 5000,
             });
           },
-        });
-      },
-      error: (fetchError) => {
-        console.error('Error fetching todo by ID:', fetchError);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Todo not found.',
-          life: 5000,
         });
       },
     });
   }
 
   onTodoDeleted(todoId: string) {
+    console.log('=== TODO DELETE DEBUG ===');
+    console.log('Todo ID:', todoId);
+    console.log('Todo ID type:', typeof todoId);
+
+    const todoToDelete = this.todos().find((t) => t.id === todoId);
+    console.log('Todo to delete:', todoToDelete);
+
+    if (!todoToDelete) {
+      console.error('Todo not found in local state!');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Task not found in local state.',
+        life: 5000,
+      });
+      return;
+    }
+
+    console.log('Sending DELETE request...');
     this.todoService.delete(todoId).subscribe({
       next: () => {
+        console.log('✅ Todo deleted successfully');
         this.todos.update((todos: Todo[]) =>
           todos.filter((todo) => todo.id !== todoId)
         );
@@ -211,16 +227,18 @@ export class TodoPage implements OnInit {
         this.messageService.add({
           severity: 'warn',
           summary: 'Task Deleted',
-          detail: 'Task has been permanently deleted.',
+          detail: `"${todoToDelete.title}" has been permanently deleted.`,
           life: 3000,
         });
       },
       error: (error) => {
-        console.error('Error deleting todo:', error);
+        console.error('❌ Delete failed:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Failed to delete task. Please try again.',
+          detail: `Failed to delete task. Error: ${
+            error.message || error.status || 'Unknown error'
+          }`,
           life: 5000,
         });
       },
