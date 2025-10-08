@@ -35,6 +35,12 @@ export class FilterField implements OnInit {
     this.emitFilterChange();
   }
 
+  resetFilters() {
+    this.activeFilter = 'all';
+    this.priorityFilter = '';
+    this.emitFilterChange();
+  }
+
   private emitFilterChange() {
     this.filterChanged.emit({
       status: this.activeFilter,

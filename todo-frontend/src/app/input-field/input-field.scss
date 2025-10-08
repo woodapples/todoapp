@@ -8,7 +8,6 @@
 
 :host ::ng-deep .add-button {
   background-color: var(--primary) !important; // DEINE PRIMARY FARBE: #56778c
-  background: var(--primary) !important; // BACKUP
   color: white !important; // WEIßER TEXT für Kontrast
   border: none !important;
   border-radius: var(--space-6) !important;
@@ -20,7 +19,6 @@
     background-color: var(
       --secondary
     ) !important; // DEINE SECONDARY FARBE: #3a5b70
-    background: var(--secondary) !important; // BACKUP
     transform: translateY(-var(--space-1)) !important;
   }
 
@@ -58,7 +56,7 @@
 // FloatLabel Fix
 :host ::ng-deep .p-float-label label {
   background: var(--bg) !important; // Weißer Hintergrund für Label
-  color: var(--text-light) !important; // Helle Farbe
+  color: var(--text) !important; // Helle Farbe
 
   &.p-float-label-active {
     color: var(--primary) !important; // Primary bei Fokus
@@ -106,7 +104,7 @@
 }
 
 .create-task-dialog.p-dialog {
-  width: 95vw !important; // Gesamte Fläche ausfüllen
+  width: 95 !important; // Gesamte Fläche ausfüllen
   max-width: 60rem !important; // Max 960px
   height: 90vh !important; // 90% der Viewport-Höhe
   max-height: 90vh !important;
@@ -149,6 +147,7 @@
     .input-float-label {
       width: 100%;
       position: relative;
+      color: var(--primary) !important;
 
       .input-field {
         width: 100%;
@@ -212,48 +211,58 @@
 }
 
 // Priority Buttons - Alle in Primary-Farbe
-:host ::ng-deep .input-field.p-selectbutton {
+:host ::ng-deep .priority-group {
+  margin-bottom: var(--space-16) !important;
+
+  .priority-label {
+    display: block;
+    margin-bottom: var(--space-8);
+    color: var(--text);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+  }
+}
+
+:host ::ng-deep .priority-buttons.p-selectbutton {
   display: flex !important;
-  gap: var(--space-8) !important;
+  gap: var(--space-6) !important;
   flex-wrap: wrap !important;
+  width: 100% !important;
 
   .p-button {
     flex: 1 !important;
-    min-width: 5rem !important;
-    padding: var(--space-12) var(--space-16) !important;
-    border: var(--space-2) solid var(--border) !important;
-    border-radius: var(--space-6) !important;
-    background: var(--bg) !important; // Weißer Hintergrund
-    color: var(--text) !important; // Dunkler Text
-    font-size: var(--font-size-sm) !important;
+    min-width: 3rem !important;
+    padding: var(--space-6) var(--space-8) !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 4px !important;
+    background: white !important;
+    color: var(--primary) !important;
+    font-size: 12px !important;
     font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 var(--space-2) var(--space-6) rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.2s ease !important;
 
     &:hover {
       border-color: var(--primary) !important;
-      background: rgba(86, 119, 140, 0.05) !important;
-      transform: translateY(-var(--space-1)) !important;
-      box-shadow: 0 var(--space-4) var(--space-12) rgba(0, 0, 0, 0.1) !important;
+      background: rgba(86, 119, 140, 0.1) !important;
+      color: var(--primary) !important;
     }
 
     &.p-highlight {
-      background: var(--primary) !important; // Primary-Farbe bei Auswahl
+      background: var(--primary) !important;
       border-color: var(--primary) !important;
-      color: white !important; // Weißer Text bei Auswahl
-      box-shadow: 0 var(--space-4) var(--space-16) rgba(86, 119, 140, 0.3) !important;
+      color: white !important;
     }
   }
 }
-.dialog-footer {
+:host ::ng-deep .dialog-footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: var(--space-12); // Etwas mehr Abstand
 
   .cancel-button.p-button {
-    background: var(--bg) !important; // Weißer Hintergrund
-    color: var(--text-light) !important; // Hellgrauer Text
+    background-color: var(--primary) !important; // DEINE PRIMARY FARBE: #56778c
+    color: white !important; // WEIßER TEXT für Kontrast
     border: var(--space-2) solid var(--border) !important;
     padding: var(--space-12) var(--space-20) !important;
     border-radius: var(--space-8) !important; // Abgerundet

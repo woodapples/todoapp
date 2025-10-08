@@ -20,7 +20,7 @@
 >
   <div class="dialog-content">
     <div class="input-group">
-      <p-floatLabel variant="on" styleClass="input-float-label">
+      <p-floatLabel variant="on">
         <input
           id="title_input"
           type="text"
@@ -36,7 +36,7 @@
     </div>
 
     <div class="input-group">
-      <p-floatLabel variant="on" styleClass="input-float-label">
+      <p-floatLabel variant="on">
         <textarea
           id="description_input"
           pInputTextarea
@@ -44,28 +44,24 @@
           rows="4"
           placeholder="Enter description (optional)"
           styleClass="input-field"
-          [autoResize]="true"
+          [autoResize]="false"
         >
         </textarea>
         <label for="description_input" class="input-label">Description</label>
       </p-floatLabel>
     </div>
 
-    <div class="input-group">
-      <p-floatLabel variant="on" styleClass="input-float-label">
-        <p-selectButton
-          id="priority_select"
-          [(ngModel)]="selectedCategory"
-          [options]="categories"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select Priority"
-          fluid
-          styleClass="input-field"
-        >
-        </p-selectButton>
-        <label for="priority_select" class="input-label">Priority Level</label>
-      </p-floatLabel>
+    <div class="input-group priority-group">
+      <label class="priority-label">Priority Level</label>
+      <p-selectButton
+        id="priority_select"
+        [(ngModel)]="selectedCategory"
+        [options]="categories"
+        optionLabel="label"
+        optionValue="value"
+        styleClass="priority-buttons"
+      >
+      </p-selectButton>
     </div>
   </div>
 

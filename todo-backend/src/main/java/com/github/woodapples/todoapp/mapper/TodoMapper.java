@@ -30,28 +30,20 @@ public class TodoMapper {
     
     public TodoResponseDTO toResponseDto(Todo entity) {
         try {
-            System.out.println("=== MAPPER TO RESPONSE DTO DEBUG ===");
-            System.out.println("Entity ID: " + entity.id);
-            System.out.println("Entity completed: " + entity.completed);
             
             TodoResponseDTO dto = new TodoResponseDTO();
             dto.id = entity.id != null ? entity.id.toString() : null;
-            System.out.println("Mapped ID: " + dto.id);
             
             dto.title = entity.title;
             dto.description = entity.description;
             dto.completed = entity.completed;
-            System.out.println("Mapped completed: " + dto.completed);
             
             dto.priority = entity.priority;
             dto.createdAt = entity.createdAt;
             dto.updatedAt = entity.updatedAt;
             
-            System.out.println("DTO mapping completed successfully");
-            System.out.println("===================================");
             return dto;
         } catch (Exception e) {
-            System.err.println("Error in toResponseDto: " + e.getMessage());
             e.printStackTrace();
             throw e;
         }

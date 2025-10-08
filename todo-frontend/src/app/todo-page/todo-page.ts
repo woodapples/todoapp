@@ -55,7 +55,6 @@ export class TodoPage implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error loading todos:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -114,7 +113,6 @@ export class TodoPage implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error creating todo:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -127,16 +125,9 @@ export class TodoPage implements OnInit {
   }
 
   onTodoCompleted(todoId: string) {
-    console.log('=== TODO COMPLETE DEBUG ===');
-    console.log('Todo ID:', todoId);
-    console.log('Todo ID type:', typeof todoId);
-    console.log('Current todos:', this.todos());
-
     const todoToComplete = this.todos().find((t) => t.id === todoId);
-    console.log('Todo to complete:', todoToComplete);
 
     if (!todoToComplete) {
-      console.error('Todo not found in local state!');
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -147,10 +138,8 @@ export class TodoPage implements OnInit {
     }
 
     // Direkt complete versuchen ohne GET
-    console.log('Sending PATCH complete request...');
     this.todoService.complete(todoId).subscribe({
       next: (updatedTodo) => {
-        console.log('✅ Todo completed successfully:', updatedTodo);
         this.todos.update((todos: Todo[]) =>
           todos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
         );
@@ -163,13 +152,8 @@ export class TodoPage implements OnInit {
         });
       },
       error: (error) => {
-        console.error('❌ PATCH complete failed:', error);
-        console.log('Trying PUT fallback...');
-
-        // Fallback: PUT method
         this.todoService.completeWithPut(todoId).subscribe({
           next: (updatedTodo) => {
-            console.log('✅ Todo completed with PUT:', updatedTodo);
             this.todos.update((todos: Todo[]) =>
               todos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
             );
@@ -182,7 +166,6 @@ export class TodoPage implements OnInit {
             });
           },
           error: (putError) => {
-            console.error('❌ PUT complete also failed:', putError);
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -198,15 +181,9 @@ export class TodoPage implements OnInit {
   }
 
   onTodoDeleted(todoId: string) {
-    console.log('=== TODO DELETE DEBUG ===');
-    console.log('Todo ID:', todoId);
-    console.log('Todo ID type:', typeof todoId);
-
     const todoToDelete = this.todos().find((t) => t.id === todoId);
-    console.log('Todo to delete:', todoToDelete);
 
     if (!todoToDelete) {
-      console.error('Todo not found in local state!');
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -216,10 +193,8 @@ export class TodoPage implements OnInit {
       return;
     }
 
-    console.log('Sending DELETE request...');
     this.todoService.delete(todoId).subscribe({
       next: () => {
-        console.log('✅ Todo deleted successfully');
         this.todos.update((todos: Todo[]) =>
           todos.filter((todo) => todo.id !== todoId)
         );
@@ -232,7 +207,6 @@ export class TodoPage implements OnInit {
         });
       },
       error: (error) => {
-        console.error('❌ Delete failed:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

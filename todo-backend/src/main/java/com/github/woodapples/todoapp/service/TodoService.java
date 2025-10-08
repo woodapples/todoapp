@@ -129,18 +129,7 @@ public class TodoService {
         Todo todo = findTodoById(id);
         todo.delete();
     }
-    
-    /**
-     * Get all overdue todos
-     * @return List of overdue todos
-     */
-    public List<TodoResponseDTO> getOverdueTodos() {
-        return Todo.findOverdue()
-                .stream()
-                .map(todoMapper::toResponseDto)
-                .collect(Collectors.toList());
-    }
-    
+   
     /**
      * Search todos by title
      * @param searchTerm Search term to match against title
@@ -152,19 +141,7 @@ public class TodoService {
                 .map(todoMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
-    
-    /**
-     * Get todos by tag
-     * @param tag Tag to filter by
-     * @return Todos containing the specified tag
-     */
-    public List<TodoResponseDTO> getTodosByTag(String tag) {
-        return Todo.findByTag(tag)
-                .stream()
-                .map(todoMapper::toResponseDto)
-                .collect(Collectors.toList());
-    }
-    
+   
     /**
      * Helper method to find todo by ID and handle not found case
      * @param id Todo ID as string

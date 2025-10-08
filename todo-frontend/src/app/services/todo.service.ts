@@ -11,7 +11,6 @@ export class TodoService {
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse) {
-    console.error('❌ TodoService Error:', error);
     let errorMessage = 'An unknown error occurred';
 
     if (error.error instanceof ErrorEvent) {
@@ -35,14 +34,12 @@ export class TodoService {
   }
 
   getAll(): Observable<Todo[]> {
-    console.log('🔄 Fetching all todos from:', this.base);
     return this.http
       .get<Todo[]>(this.base)
       .pipe(retry(2), catchError(this.handleError));
   }
 
   getById(id: string): Observable<Todo> {
-    console.log('🔄 Fetching todo by ID:', `${this.base}/${id}`);
     return this.http
       .get<Todo>(`${this.base}/${id}`)
       .pipe(catchError(this.handleError));
@@ -61,18 +58,13 @@ export class TodoService {
   }
 
   complete(id: string): Observable<Todo> {
-    console.log('🔄 TodoService.complete() called with ID:', id);
-    console.log('🔄 Complete URL:', `${this.base}/${id}/complete`);
-
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Invalid todo ID provided'));
     }
-
     const headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-
     return this.http
       .patch<Todo>(
         `${this.base}/${id}/complete`,
@@ -84,9 +76,6 @@ export class TodoService {
 
   // Alternative complete method using PUT
   completeWithPut(id: string): Observable<Todo> {
-    console.log('🔄 TodoService.completeWithPut() called with ID:', id);
-    console.log('🔄 PUT URL:', `${this.base}/${id}`);
-
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Invalid todo ID provided'));
     }
@@ -98,9 +87,6 @@ export class TodoService {
   }
 
   delete(id: string): Observable<void> {
-    console.log('🔄 TodoService.delete() called with ID:', id);
-    console.log('🔄 Delete URL:', `${this.base}/${id}`);
-
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Invalid todo ID provided'));
     }

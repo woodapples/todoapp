@@ -1,94 +1,115 @@
 <div class="todo-container">
   <!-- Loading State -->
   <div *ngIf="loading" class="loading">
-    <p>Loading tasks...</p>
+    <p-skeleton width="100%" height="3rem"></p-skeleton>
+    <p-skeleton
+      width="100%"
+      height="3rem"
+      style="margin-top: 0.5rem"
+    ></p-skeleton>
   </div>
 
   <!-- Active Tasks -->
-  <div *ngIf="!loading && activeTodos.length > 0" class="section">
-    <div class="section-header">
-      <h3>Active Tasks</h3>
-      <span class="count">{{ activeTodos.length }}</span>
-    </div>
+  <ng-container *ngIf="!loading && activeTodos.length > 0">
+    <p-panel header="Active Tasks">
+      <div class="section-header">
+        <span class="count">{{ activeTodos.length }}</span>
+      </div>
 
-    <div class="todo-list">
-      <div
-        class="todo-item"
-        *ngFor="let todo of activeTodos; trackBy: trackByTodoId"
-      >
-        <div class="todo-content">
-          <div class="todo-info">
-            <h4 class="todo-title">{{ todo.title }}</h4>
-            <p class="todo-description" *ngIf="todo.description">
-              {{ todo.description }}
-            </p>
-            <span
-              class="priority-badge"
-              [class]="'priority-' + (todo.priority || 'medium').toLowerCase()"
-            >
-              {{ getPriorityLabel(todo.priority) }}
-            </span>
-          </div>
+      <div class="todo-list">
+        <div
+          class="todo-item"
+          *ngFor="let todo of activeTodos; trackBy: trackByTodoId"
+        >
+          <div class="todo-content">
+            <div class="todo-info">
+              <h4 class="todo-title">{{ todo.title }}</h4>
+              <p class="todo-description" *ngIf="todo.description">
+                {{ todo.description }}
+              </p>
 
-          <div class="todo-actions">
-            <button
-              class="action-btn complete-btn"
-              (click)="onTodoCompleted(todo)"
-              title="Mark as completed"
-            >
-              ✓
-            </button>
-            <button
-              class="action-btn delete-btn"
-              (click)="onTodoDeleted(todo)"
-              title="Delete task"
-            >
-              ×
-            </button>
+              <p-tag
+                [value]="getPriorityLabel(todo.priority)"
+                [class]="
+                  'priority-' +
+                  (todo.priority || 'medium').toLowerCase() +
+                  ' priority-badge'
+                "
+              ></p-tag>
+            </div>
+
+            <div class="todo-actions">
+              <button
+                pButton
+                type="button"
+                icon="pi pi-check"
+                class="p-button-rounded p-button-success"
+                (click)="onTodoCompleted(todo)"
+                title="Mark as completed"
+              ></button>
+
+              <button
+                pButton
+                type="button"
+                icon="pi pi-times"
+                class="p-button-rounded p-button-danger"
+                (click)="onTodoDeleted(todo)"
+                title="Delete task"
+              ></button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </p-panel>
+  </ng-container>
 
   <!-- Completed Tasks -->
-  <div *ngIf="!loading && completedTodos.length > 0" class="section">
-    <div class="section-header">
-      <h3>Completed Tasks</h3>
-      <span class="count">{{ completedTodos.length }}</span>
-    </div>
+  <ng-container *ngIf="!loading && completedTodos.length > 0">
+    <p-panel header="Completed Tasks">
+      <div class="section-header">
+        <span class="count">{{ completedTodos.length }}</span>
+      </div>
 
-    <div class="todo-list">
-      <div
-        class="todo-item completed"
-        *ngFor="let todo of completedTodos; trackBy: trackByTodoId"
-      >
-        <div class="todo-content">
-          <div class="todo-info">
-            <h4 class="todo-title">{{ todo.title }}</h4>
-            <p class="todo-description" *ngIf="todo.description">
-              {{ todo.description }}
-            </p>
-            <span class="priority-badge completed-badge"> Completed </span>
-          </div>
+      <div class="todo-list">
+        <div
+          class="todo-item completed"
+          *ngFor="let todo of completedTodos; trackBy: trackByTodoId"
+        >
+          <div class="todo-content">
+            <div class="todo-info">
+              <h4 class="todo-title">{{ todo.title }}</h4>
+              <p class="todo-description" *ngIf="todo.description">
+                {{ todo.description }}
+              </p>
+              <p-tag
+                value="Completed"
+                class="priority-badge completed-badge"
+              ></p-tag>
+            </div>
 
-          <div class="todo-actions">
-            <button
-              class="action-btn delete-btn"
-              (click)="onTodoDeleted(todo)"
-              title="Delete task"
-            >
-              ×
-            </button>
+            <div class="todo-actions">
+              <button
+                pButton
+                type="button"
+                icon="pi pi-times"
+                class="p-button-rounded p-button-danger"
+                (click)="onTodoDeleted(todo)"
+                title="Delete task"
+              ></button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </p-panel>
+  </ng-container>
 
   <!-- Empty State -->
-  <div *ngIf="!loading && todos.length === 0" class="empty-state">
-    <h3>No tasks found</h3>
-    <p>Create your first task to get started</p>
+  <div *ngIf="!loading && todos.length === 0">
+    <p-panel header="No tasks">
+      <div class="empty-state">
+        <h3>No tasks found</h3>
+        <p>Create your first task to get started</p>
+      </div>
+    </p-panel>
   </div>
 </div>

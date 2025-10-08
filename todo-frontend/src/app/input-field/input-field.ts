@@ -49,13 +49,8 @@ export class InputField implements OnInit {
     this.visible = false;
   }
 
-  // Dynamische
-  // Optional: Resize-Listener für dynamische Anpassungen
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    // Dialog-Größen werden automatisch neu berechnet bei Resize
-    // durch die getDialogStyle() Funktion
-  }
+  onResize(event: any) {}
 
   addTodo() {
     if (this.title.trim()) {
@@ -65,13 +60,10 @@ export class InputField implements OnInit {
         priority: this.selectedCategory as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT',
       };
 
-      // Emit das Todo-Daten Event
       this.todoCreated.emit(todoData);
 
-      // Reset form nach dem Erstellen
       this.resetForm();
 
-      // Dialog schließen
       this.hideDialog();
     }
   }
