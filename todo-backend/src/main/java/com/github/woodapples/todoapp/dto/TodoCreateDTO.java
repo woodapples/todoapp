@@ -5,9 +5,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Future;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * DTO for Todo Creation

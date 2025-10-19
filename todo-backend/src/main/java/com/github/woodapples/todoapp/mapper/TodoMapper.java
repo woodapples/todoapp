@@ -6,8 +6,6 @@ import com.github.woodapples.todoapp.dto.TodoUpdateDTO;
 import com.github.woodapples.todoapp.dto.TodoResponseDTO;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Todo Mapper - Entity↔DTO Conversion

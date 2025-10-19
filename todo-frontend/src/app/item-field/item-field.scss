@@ -197,3 +197,122 @@
     align-self: flex-end;
   }
 }
+
+/* Edit Dialog Styles */
+.edit-form {
+  .form-field {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  p-floatlabel {
+    width: 100%;
+  }
+
+  p-selectbutton {
+    width: 100%;
+
+    ::ng-deep .p-selectbutton {
+      width: 100%;
+
+      .p-button {
+        flex: 1;
+      }
+    }
+  }
+
+  .p-error {
+    margin-top: 0.25rem;
+    display: block;
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Priority Colors for Edit Dialog */
+::ng-deep .p-selectbutton {
+  .p-button {
+    &[aria-pressed="true"] {
+      &[data-value="LOW"] {
+        background-color: var(--text-light);
+        border-color: var(--text-light);
+      }
+
+      &[data-value="MEDIUM"] {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      &[data-value="HIGH"] {
+        background-color: var(--warning);
+        border-color: var(--warning);
+      }
+
+      &[data-value="URGENT"] {
+        background-color: var(--error);
+        border-color: var(--error);
+      }
+    }
+  }
+}
+
+/* Primary Color for Action Buttons */
+.todo-actions {
+  ::ng-deep .p-button {
+    &.p-button-rounded {
+      // Edit Button (Info/Primary)
+      &.p-button-info {
+        background-color: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: white !important;
+
+        &:hover {
+          background-color: var(--secondary) !important;
+          border-color: var(--secondary) !important;
+        }
+      }
+
+      // Success Button (Complete)
+      &.p-button-success {
+        background-color: var(--success) !important;
+        border-color: var(--success) !important;
+
+        &:hover {
+          background-color: var(--success) !important;
+          border-color: var(--success) !important;
+          filter: brightness(0.9);
+        }
+      }
+
+      // Danger Button (Delete)
+      &.p-button-danger {
+        background-color: var(--error) !important;
+        border-color: var(--error) !important;
+
+        &:hover {
+          background-color: var(--error) !important;
+          border-color: var(--error) !important;
+          filter: brightness(0.9);
+        }
+      }
+    }
+  }
+}

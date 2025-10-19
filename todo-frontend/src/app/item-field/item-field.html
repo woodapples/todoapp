@@ -42,6 +42,15 @@
               <button
                 pButton
                 type="button"
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-info"
+                (click)="openEditDialog(todo)"
+                title="Edit task"
+              ></button>
+
+              <button
+                pButton
+                type="button"
                 icon="pi pi-check"
                 class="p-button-rounded p-button-success"
                 (click)="onTodoCompleted(todo)"
@@ -91,6 +100,15 @@
               <button
                 pButton
                 type="button"
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-info"
+                (click)="openEditDialog(todo)"
+                title="Edit task"
+              ></button>
+
+              <button
+                pButton
+                type="button"
                 icon="pi pi-times"
                 class="p-button-rounded p-button-danger"
                 (click)="onTodoDeleted(todo)"
@@ -113,3 +131,14 @@
     </p-panel>
   </div>
 </div>
+
+<!-- Edit Dialog -->
+<app-todo-form
+  [(visible)]="showEditDialog"
+  mode="update"
+  [todo]="editingTodo || undefined"
+  title="Edit Task"
+  (formSubmitted)="onEditFormSubmitted($event)"
+  (formCancelled)="onEditFormCancelled()"
+>
+</app-todo-form>

@@ -4,8 +4,6 @@ import com.github.woodapples.todoapp.entity.Todo.Priority;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * DTO for Todo Updates

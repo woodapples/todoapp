@@ -6,6 +6,7 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { providePrimeNG } from 'primeng/config';
+import { MessageService } from 'primeng/api';
 import MyPreset from './mypreset';
 
 export const appConfig: ApplicationConfig = {
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimations(),
+    MessageService, // Global MessageService
     providePrimeNG({
       theme: {
         preset: MyPreset,

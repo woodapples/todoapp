@@ -141,6 +141,43 @@ public class TodoService {
                 .map(todoMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Mark a todo as incomplete
+     * @param id Todo ID
+     * @return Updated todo as DTO
+     * @throws TodoNotFoundException if todo doesn't exist
+     */
+    public TodoResponseDTO markIncomplete(String id) {
+        Todo todo = findTodoById(id);
+        todo.markIncomplete();
+        todo.update();
+        return todoMapper.toResponseDto(todo);
+    }
+
+    /**
+     * Get total count of todos
+     * @return Total number of todos
+     */
+    public long getTotalCount() {
+        return Todo.count();
+    }
+
+    /**
+     * Get count of completed todos
+     * @return Number of completed todos
+     */
+    public long getCompletedCount() {
+        return Todo.count("completed", true);
+    }
+
+    /**
+     * Get count of pending todos
+     * @return Number of pending todos
+     */
+    public long getPendingCount() {
+        return Todo.count("completed", false);
+    }
    
     /**
      * Helper method to find todo by ID and handle not found case

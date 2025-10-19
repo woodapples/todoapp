@@ -1,0 +1,165 @@
+/* Todo Form Styles */
+.todo-form {
+  .form-field {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  p-floatlabel {
+    width: 100%;
+  }
+
+  p-selectbutton {
+    width: 100%;
+
+    ::ng-deep .p-selectbutton {
+      width: 100%;
+
+      .p-button {
+        flex: 1;
+      }
+    }
+  }
+
+  .p-error {
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .align-items-center {
+    align-items: center;
+  }
+
+  .ml-2 {
+    margin-left: 0.5rem;
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Priority Colors for Select Buttons */
+::ng-deep .p-selectbutton {
+  .p-button {
+    &[aria-pressed="true"] {
+      &:has([data-pc-section="label"]:contains("Low")) {
+        background-color: var(--text-light) !important;
+        border-color: var(--text-light) !important;
+        color: white !important;
+      }
+
+      &:has([data-pc-section="label"]:contains("Medium")) {
+        background-color: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: white !important;
+      }
+
+      &:has([data-pc-section="label"]:contains("High")) {
+        background-color: var(--warning) !important;
+        border-color: var(--warning) !important;
+        color: white !important;
+      }
+
+      &:has([data-pc-section="label"]:contains("Urgent")) {
+        background-color: var(--error) !important;
+        border-color: var(--error) !important;
+        color: white !important;
+      }
+    }
+  }
+}
+
+/* Alternative approach for priority colors */
+::ng-deep .p-selectbutton .p-button.p-highlight {
+  &[data-priority="LOW"] {
+    background-color: var(--text-light) !important;
+    border-color: var(--text-light) !important;
+  }
+
+  &[data-priority="MEDIUM"] {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+  }
+
+  &[data-priority="HIGH"] {
+    background-color: var(--warning) !important;
+    border-color: var(--warning) !important;
+  }
+
+  &[data-priority="URGENT"] {
+    background-color: var(--error) !important;
+    border-color: var(--error) !important;
+  }
+}
+
+/* Form Validation Styles */
+::ng-deep .ng-invalid.ng-touched {
+  border-color: #ef4444 !important;
+}
+
+::ng-deep .ng-valid.ng-touched {
+  border-color: #10b981 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  ::ng-deep .p-dialog {
+    width: 95% !important;
+    margin: 1rem;
+  }
+
+  .todo-form {
+    .form-field {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+/* Primary Color for Dialog Buttons */
+.dialog-footer {
+  ::ng-deep .p-button:not(.p-button-text) {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+
+    &:hover {
+      background-color: var(--secondary) !important;
+      border-color: var(--secondary) !important;
+    }
+
+    &:active,
+    &:focus {
+      background-color: var(--secondary) !important;
+      border-color: var(--secondary) !important;
+      filter: brightness(0.9);
+    }
+
+    &:disabled {
+      background-color: var(--border) !important;
+      border-color: var(--border) !important;
+      opacity: 0.6;
+      color: var(--text-light) !important;
+    }
+  }
+}

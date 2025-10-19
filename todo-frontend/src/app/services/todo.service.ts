@@ -3,10 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Todo, TodoCreate, TodoUpdate } from '../models/todo.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
-  private base = 'http://localhost:8080/api/todos';
+  private base = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -47,7 +48,7 @@ export class TodoService {
 
   testBackend(): Observable<string> {
     return this.http
-      .get(`${this.base}/test`, { responseType: 'text' })
+      .get(`${this.base}/health`, { responseType: 'text' })
       .pipe(catchError(this.handleError));
   }
 
@@ -74,15 +75,59 @@ export class TodoService {
       .pipe(catchError(this.handleError));
   }
 
-  // Alternative complete method using PUT
-  completeWithPut(id: string): Observable<Todo> {
+  markIncomplete(id: string): Observable<Todo> {
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Invalid todo ID provided'));
     }
-
-    const updatePayload = { completed: true };
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
     return this.http
-      .put<Todo>(`${this.base}/${id}`, updatePayload)
+      .patch<Todo>(
+        `${this.base}/${id}/incomplete`,
+        {}, // Leerer Body für PATCH
+        { headers }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getTodoCounts(): Observable<{
+    total: number;
+    completed: number;
+    pending: number;
+  }> {
+    return this.http
+      .get<{ total: number; completed: number; pending: number }>(
+        `${this.base}/count`
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  // Neue Endpoints hinzufügen
+  searchTodos(searchTerm: string): Observable<Todo[]> {
+    return this.http
+      .get<Todo[]>(`${this.base}/search`, {
+        params: { q: searchTerm },
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getTodosByStatus(completed: boolean): Observable<Todo[]> {
+    return this.http
+      .get<Todo[]>(this.base, {
+        params: { completed: completed.toString() },
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getTodosByPriority(
+    priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+  ): Observable<Todo[]> {
+    return this.http
+      .get<Todo[]>(this.base, {
+        params: { priority },
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -97,6 +142,11 @@ export class TodoService {
   }
 
   update(id: string, payload: TodoUpdate): Observable<Todo> {
-    return this.http.put<Todo>(`${this.base}/${id}`, payload);
+    if (!id || id.trim() === '') {
+      return throwError(() => new Error('Invalid todo ID provided'));
+    }
+    return this.http
+      .put<Todo>(`${this.base}/${id}`, payload)
+      .pipe(catchError(this.handleError));
   }
 }

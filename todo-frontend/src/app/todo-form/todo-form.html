@@ -1,0 +1,107 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [header]="title"
+  [style]="{ width: '600px' }"
+  [closable]="true"
+  [resizable]="false"
+  [draggable]="false"
+  (onHide)="closeDialog()"
+>
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()" class="todo-form">
+    <!-- Title Field -->
+    <div class="form-field">
+      <p-floatLabel>
+        <input
+          pInputText
+          id="todo-title"
+          formControlName="title"
+          class="w-full"
+          [class.ng-invalid]="
+            todoForm.get('title')?.invalid && todoForm.get('title')?.touched
+          "
+        />
+        <label for="todo-title">Title *</label>
+      </p-floatLabel>
+      <small
+        class="p-error"
+        *ngIf="todoForm.get('title')?.invalid && todoForm.get('title')?.touched"
+      >
+        Title is required and must be between 1 and 200 characters.
+      </small>
+    </div>
+
+    <!-- Description Field -->
+    <div class="form-field">
+      <p-floatLabel>
+        <textarea
+          pTextarea
+          id="todo-description"
+          formControlName="description"
+          rows="3"
+          class="w-full"
+          [class.ng-invalid]="
+            todoForm.get('description')?.invalid &&
+            todoForm.get('description')?.touched
+          "
+        >
+        </textarea>
+        <label for="todo-description">Description</label>
+      </p-floatLabel>
+      <small
+        class="p-error"
+        *ngIf="
+          todoForm.get('description')?.invalid &&
+          todoForm.get('description')?.touched
+        "
+      >
+        Description must not exceed 1000 characters.
+      </small>
+    </div>
+
+    <!-- Priority Field -->
+    <div class="form-field">
+      <label class="field-label">Priority</label>
+      <p-selectButton
+        formControlName="priority"
+        [options]="priorityOptions"
+        optionLabel="label"
+        optionValue="value"
+        class="w-full"
+      >
+      </p-selectButton>
+    </div>
+
+    <!-- Completion Status (only for update mode) -->
+    <div class="form-field" *ngIf="showCompletedField">
+      <div class="flex align-items-center">
+        <p-checkbox
+          formControlName="completed"
+          [binary]="true"
+          inputId="todo-completed"
+        >
+        </p-checkbox>
+        <label for="todo-completed" class="ml-2">Mark as completed</label>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        [text]="true"
+        (onClick)="onCancel()"
+      >
+      </p-button>
+      <p-button
+        [label]="submitButtonLabel"
+        [icon]="submitButtonIcon"
+        (onClick)="onSubmit()"
+        [disabled]="todoForm.invalid"
+      >
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>

@@ -7,8 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TooltipModule } from 'primeng/tooltip';
-import { FormsModule } from '@angular/forms';
-import { Todo } from '../models/todo.interface';
+import { Todo, TodoUpdate } from '../models/todo.interface';
+import { TodoForm, TodoFormData } from '../todo-form/todo-form';
 
 @Component({
   selector: 'app-item-field',
@@ -22,7 +22,7 @@ import { Todo } from '../models/todo.interface';
     TagModule,
     SkeletonModule,
     TooltipModule,
-    FormsModule,
+    TodoForm,
   ],
   templateUrl: './item-field.html',
   styleUrls: ['./item-field.scss'],
@@ -32,6 +32,43 @@ export class ItemField {
   @Input() loading: boolean = false;
   @Output() todoCompleted = new EventEmitter<string>();
   @Output() todoDeleted = new EventEmitter<string>();
+  @Output() todoUpdated = new EventEmitter<{
+    id: string;
+    update: TodoUpdate;
+  }>();
+
+  // Edit functionality
+  showEditDialog = false;
+  editingTodo: Todo | null = null;
+
+  openEditDialog(todo: Todo) {
+    this.editingTodo = todo;
+    this.showEditDialog = true;
+  }
+
+  onEditFormSubmitted(formData: TodoFormData) {
+    if (this.editingTodo) {
+      const update: TodoUpdate = {
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority,
+        completed: formData.completed,
+      };
+
+      this.todoUpdated.emit({
+        id: this.editingTodo.id,
+        update: update,
+      });
+
+      this.showEditDialog = false;
+      this.editingTodo = null;
+    }
+  }
+
+  onEditFormCancelled() {
+    this.showEditDialog = false;
+    this.editingTodo = null;
+  }
 
   onTodoCompleted(todo: Todo) {
     this.todoCompleted.emit(todo.id);

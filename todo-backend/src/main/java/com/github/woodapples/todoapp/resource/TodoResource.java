@@ -41,25 +41,11 @@ public class TodoResource {
     TodoService todoService;
     
     @GET
-    @Path("/test")
-    public String test() {
-        return "TodoResource is working!";
-    }
-    
-    @GET
-    @Path("/debug/{id}")
-    @Operation(summary = "Debug todo by ID")
-    public Response debugTodo(@PathParam("id") String id) {
-        try {
-            
-            TodoResponseDTO todo = todoService.getTodoById(id);
-            return Response.ok(todo).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(500)
-                .entity("Debug error: " + e.getMessage())
-                .build();
-        }
+    @Path("/health")
+    @Operation(summary = "Health check endpoint")
+    @APIResponse(responseCode = "200", description = "Service is healthy")
+    public Response healthCheck() {
+        return Response.ok("Todo service is healthy").build();
     }
     
     @GET
@@ -81,12 +67,40 @@ public class TodoResource {
    
     @GET
     @Path("/search")
-    @Operation(summary = "Search todos by title")
+    @Operation(summary = "Search todos by title", description = "Search for todos containing the specified term in their title")
+    @APIResponse(responseCode = "200", description = "List of matching todos")
     public List<TodoResponseDTO> searchTodos(@QueryParam("q") String searchTerm) {
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
             return todoService.getAllTodos();
         }
         return todoService.searchTodos(searchTerm);
+    }
+
+    @PATCH
+    @Path("/{id}/incomplete")
+    @Operation(summary = "Mark todo as incomplete")
+    @APIResponse(responseCode = "200", description = "Todo marked as incomplete")
+    @APIResponse(responseCode = "404", description = "Todo not found")
+    @APIResponse(responseCode = "400", description = "Invalid todo ID format")
+    public TodoResponseDTO markIncomplete(@PathParam("id") String id) {
+        return todoService.markIncomplete(id);
+    }
+
+    @GET
+    @Path("/count")
+    @Operation(summary = "Get todo counts by status")
+    @APIResponse(responseCode = "200", description = "Todo count statistics")
+    public Response getTodoCounts() {
+        long totalCount = todoService.getTotalCount();
+        long completedCount = todoService.getCompletedCount();
+        long pendingCount = totalCount - completedCount;
+        
+        var stats = new java.util.HashMap<String, Long>();
+        stats.put("total", totalCount);
+        stats.put("completed", completedCount);
+        stats.put("pending", pendingCount);
+        
+        return Response.ok(stats).build();
     }
    
     @GET
@@ -120,18 +134,11 @@ public class TodoResource {
     @PATCH
     @Path("/{id}/complete")
     @Operation(summary = "Mark todo as completed")
-    public Response completeTodo(@PathParam("id") String id) {
-        try {
-            
-            TodoResponseDTO result = todoService.completeTodo(id);
-            
-            return Response.ok(result).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(500)
-                .entity("Complete error: " + e.getMessage())
-                .build();
-        }
+    @APIResponse(responseCode = "200", description = "Todo marked as completed")
+    @APIResponse(responseCode = "404", description = "Todo not found")
+    @APIResponse(responseCode = "400", description = "Invalid todo ID format")
+    public TodoResponseDTO completeTodo(@PathParam("id") String id) {
+        return todoService.completeTodo(id);
     }
     
     @DELETE
@@ -139,17 +146,9 @@ public class TodoResource {
     @Operation(summary = "Delete todo")
     @APIResponse(responseCode = "204", description = "Todo deleted successfully")
     @APIResponse(responseCode = "404", description = "Todo not found")
+    @APIResponse(responseCode = "400", description = "Invalid todo ID format")
     public Response deleteTodo(@PathParam("id") String id) {
-        try {
-            
-            todoService.deleteTodo(id);
-            
-            return Response.noContent().build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(500)
-                .entity("Delete error: " + e.getMessage())
-                .build();
-        }
+        todoService.deleteTodo(id);
+        return Response.noContent().build();
     }
 }

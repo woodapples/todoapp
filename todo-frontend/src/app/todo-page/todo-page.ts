@@ -6,7 +6,7 @@ import { Header } from '../header/header';
 import { InputField } from '../input-field/input-field';
 import { FilterField, FilterOptions } from '../filter-field/filter-field';
 import { TodoService } from '../services/todo.service';
-import { Todo, TodoCreate } from '../models/todo.interface';
+import { Todo, TodoCreate, TodoUpdate } from '../models/todo.interface';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
@@ -152,30 +152,43 @@ export class TodoPage implements OnInit {
         });
       },
       error: (error) => {
-        this.todoService.completeWithPut(todoId).subscribe({
-          next: (updatedTodo) => {
-            this.todos.update((todos: Todo[]) =>
-              todos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
-            );
-            this.applyCurrentFilter();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Task Completed',
-              detail: `"${updatedTodo.title}" marked as completed!`,
-              life: 3000,
-            });
-          },
-          error: (putError) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: `Failed to mark task as completed. Error: ${
-                putError.message || putError.status || 'Unknown error'
-              }`,
-              life: 5000,
-            });
-          },
+        console.error('Failed to complete todo:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Failed to mark task as completed. ${
+            error.message || 'Please try again.'
+          }`,
+          life: 5000,
         });
+      },
+    });
+  }
+
+  onTodoUpdated(event: { id: string; update: TodoUpdate }) {
+    this.loading.set(true);
+    this.todoService.update(event.id, event.update).subscribe({
+      next: (updatedTodo) => {
+        this.todos.update((todos: Todo[]) =>
+          todos.map((todo) => (todo.id === event.id ? updatedTodo : todo))
+        );
+        this.applyCurrentFilter();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `Task "${updatedTodo.title}" updated successfully!`,
+          life: 4000,
+        });
+        this.loading.set(false);
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to update task. Please try again.',
+          life: 5000,
+        });
+        this.loading.set(false);
       },
     });
   }
