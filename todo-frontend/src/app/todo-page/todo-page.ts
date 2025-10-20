@@ -6,7 +6,7 @@ import { Header } from '../header/header';
 import { InputField } from '../input-field/input-field';
 import { FilterField, FilterOptions } from '../filter-field/filter-field';
 import { TodoService } from '../services/todo.service';
-import { Todo, TodoCreate, TodoUpdate } from '../models/todo.interface';
+import { Todo, TodoCreate, TodoUpdate } from '../model/todo.interface';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
@@ -137,7 +137,6 @@ export class TodoPage implements OnInit {
       return;
     }
 
-    // Direkt complete versuchen ohne GET
     this.todoService.complete(todoId).subscribe({
       next: (updatedTodo) => {
         this.todos.update((todos: Todo[]) =>

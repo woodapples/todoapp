@@ -1,5 +1,4 @@
 <div class="todo-container">
-  <!-- Loading State -->
   <div *ngIf="loading" class="loading">
     <p-skeleton width="100%" height="3rem"></p-skeleton>
     <p-skeleton
@@ -9,7 +8,6 @@
     ></p-skeleton>
   </div>
 
-  <!-- Active Tasks -->
   <ng-container *ngIf="!loading && activeTodos.length > 0">
     <p-panel header="Active Tasks">
       <div class="section-header">
@@ -72,7 +70,6 @@
     </p-panel>
   </ng-container>
 
-  <!-- Completed Tasks -->
   <ng-container *ngIf="!loading && completedTodos.length > 0">
     <p-panel header="Completed Tasks">
       <div class="section-header">
@@ -121,7 +118,6 @@
     </p-panel>
   </ng-container>
 
-  <!-- Empty State -->
   <div *ngIf="!loading && todos.length === 0">
     <p-panel header="No tasks">
       <div class="empty-state">
@@ -132,7 +128,6 @@
   </div>
 </div>
 
-<!-- Edit Dialog -->
 <app-todo-form
   [(visible)]="showEditDialog"
   mode="update"

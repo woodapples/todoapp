@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Todo } from '../models/todo.interface';
+import { Todo } from '../model/todo.interface';
 
 export interface FilterOptions {
   status: 'all' | 'active' | 'completed';

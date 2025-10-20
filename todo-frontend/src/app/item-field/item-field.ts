@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TooltipModule } from 'primeng/tooltip';
-import { Todo, TodoUpdate } from '../models/todo.interface';
+import { Todo, TodoUpdate } from '../model/todo.interface';
 import { TodoForm, TodoFormData } from '../todo-form/todo-form';
 
 @Component({

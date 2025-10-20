@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Todo, TodoCreate, TodoUpdate } from '../models/todo.interface';
-import { environment } from '../../environments/environment';
+import { Todo, TodoCreate, TodoUpdate } from '../model/todo.interface';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
   private base = environment.apiBaseUrl;
+  private todoHeaders = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -62,15 +66,11 @@ export class TodoService {
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Invalid todo ID provided'));
     }
-    const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    };
     return this.http
       .patch<Todo>(
         `${this.base}/${id}/complete`,
         {}, // Leerer Body für PATCH
-        { headers }
+        { headers: this.todoHeaders }
       )
       .pipe(catchError(this.handleError));
   }
@@ -79,15 +79,11 @@ export class TodoService {
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Invalid todo ID provided'));
     }
-    const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    };
     return this.http
       .patch<Todo>(
         `${this.base}/${id}/incomplete`,
         {}, // Leerer Body für PATCH
-        { headers }
+        { headers: this.todoHeaders }
       )
       .pipe(catchError(this.handleError));
   }
@@ -104,7 +100,6 @@ export class TodoService {
       .pipe(catchError(this.handleError));
   }
 
-  // Neue Endpoints hinzufügen
   searchTodos(searchTerm: string): Observable<Todo[]> {
     return this.http
       .get<Todo[]>(`${this.base}/search`, {

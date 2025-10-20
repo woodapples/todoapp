@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { TodoCreate } from '../models/todo.interface';
+import { TodoCreate } from '../model/todo.interface';
 import { TodoForm, TodoFormData } from '../todo-form/todo-form';
 
 @Component({

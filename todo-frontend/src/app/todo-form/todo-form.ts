@@ -22,7 +22,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { Todo, TodoCreate, TodoUpdate } from '../models/todo.interface';
+import { Todo, TodoCreate, TodoUpdate } from '../model/todo.interface';
 
 export interface TodoFormData {
   title: string;
