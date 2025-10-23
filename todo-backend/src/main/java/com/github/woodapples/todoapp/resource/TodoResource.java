@@ -21,14 +21,6 @@ import java.util.List;
 
 /**
  * Todo Resource - REST API Endpoints
- * 
- * API-First Approach: Diese Klasse implementiert die in openapi.yaml definierte API-Spezifikation
- * Best Practice: Thin controller layer
- * - Delegation to service layer
- * - Proper HTTP status codes
- * - Comprehensive OpenAPI documentation
- * - Input validation
- * - Contract-first implementation
  */
 @Path("/api/todos")
 @Tag(name = "Todo Management", description = "CRUD operations for Todo items")

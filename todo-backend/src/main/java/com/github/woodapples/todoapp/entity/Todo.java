@@ -11,9 +11,6 @@ import io.quarkus.panache.common.Sort;
 
 /**
  * Todo Entity - Domain Model
- * 
- * Best Practice: Entity repräsentiert Business Domain, nicht API Contract
- * Separated from DTOs for clean architecture
  */
 @MongoEntity(collection = "todos")
 @Schema(description = "Todo domain entity")

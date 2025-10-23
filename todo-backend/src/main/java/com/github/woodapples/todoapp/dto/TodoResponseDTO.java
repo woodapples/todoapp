@@ -8,9 +8,6 @@ import java.time.LocalDateTime;
 
 /**
  * DTO for Todo Responses
- * 
- * Best Practice: Response DTOs include computed fields
- * and hide internal entity details
  */
 @Schema(description = "Todo response")
 public class TodoResponseDTO {

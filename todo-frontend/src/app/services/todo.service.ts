@@ -44,12 +44,6 @@ export class TodoService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getById(id: string): Observable<Todo> {
-    return this.http
-      .get<Todo>(`${this.base}/${id}`)
-      .pipe(catchError(this.handleError));
-  }
-
   testBackend(): Observable<string> {
     return this.http
       .get(`${this.base}/health`, { responseType: 'text' })
@@ -72,57 +66,6 @@ export class TodoService {
         {}, // Leerer Body für PATCH
         { headers: this.todoHeaders }
       )
-      .pipe(catchError(this.handleError));
-  }
-
-  markIncomplete(id: string): Observable<Todo> {
-    if (!id || id.trim() === '') {
-      return throwError(() => new Error('Invalid todo ID provided'));
-    }
-    return this.http
-      .patch<Todo>(
-        `${this.base}/${id}/incomplete`,
-        {}, // Leerer Body für PATCH
-        { headers: this.todoHeaders }
-      )
-      .pipe(catchError(this.handleError));
-  }
-
-  getTodoCounts(): Observable<{
-    total: number;
-    completed: number;
-    pending: number;
-  }> {
-    return this.http
-      .get<{ total: number; completed: number; pending: number }>(
-        `${this.base}/count`
-      )
-      .pipe(catchError(this.handleError));
-  }
-
-  searchTodos(searchTerm: string): Observable<Todo[]> {
-    return this.http
-      .get<Todo[]>(`${this.base}/search`, {
-        params: { q: searchTerm },
-      })
-      .pipe(catchError(this.handleError));
-  }
-
-  getTodosByStatus(completed: boolean): Observable<Todo[]> {
-    return this.http
-      .get<Todo[]>(this.base, {
-        params: { completed: completed.toString() },
-      })
-      .pipe(catchError(this.handleError));
-  }
-
-  getTodosByPriority(
-    priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
-  ): Observable<Todo[]> {
-    return this.http
-      .get<Todo[]>(this.base, {
-        params: { priority },
-      })
       .pipe(catchError(this.handleError));
   }
 

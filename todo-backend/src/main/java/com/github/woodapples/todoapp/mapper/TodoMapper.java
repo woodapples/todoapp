@@ -9,11 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Todo Mapper - Entity↔DTO Conversion
- * 
- * Best Practice: Explicit mapping layer
- * - Separation of concerns
- * - Computed fields in DTOs
- * - Type safety
  */
 @ApplicationScoped
 public class TodoMapper {

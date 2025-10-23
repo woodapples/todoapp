@@ -8,11 +8,6 @@ import jakarta.validation.constraints.Size;
 
 /**
  * DTO for Todo Creation
- * 
- * Best Practice: Separate DTOs for different operations
- * - Prevents over-posting attacks
- * - Clear API contracts
- * - Validation per use-case
  */
 @Schema(description = "Todo creation request")
 public class TodoCreateDTO {

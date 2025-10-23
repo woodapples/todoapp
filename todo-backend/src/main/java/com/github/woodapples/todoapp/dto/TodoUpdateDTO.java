@@ -7,11 +7,6 @@ import jakarta.validation.constraints.Size;
 
 /**
  * DTO for Todo Updates
- * 
- * Best Practice: Optional fields for partial updates
- * - Null values = no change
- * - Validation only on provided fields
- * - PATCH semantics support
  */
 @Schema(description = "Todo update request")
 public class TodoUpdateDTO {

@@ -16,12 +16,6 @@ import java.util.stream.Collectors;
 
 /**
  * Todo Service - Business Logic Layer
- * 
- * Best Practice: Service layer encapsulates business logic
- * - Transactional boundaries
- * - Entity ↔ DTO conversion via Mapper
- * - Business validation
- * - Exception handling
  */
 @ApplicationScoped
 public class TodoService {
@@ -170,15 +164,7 @@ public class TodoService {
     public long getCompletedCount() {
         return Todo.count("completed", true);
     }
-
-    /**
-     * Get count of pending todos
-     * @return Number of pending todos
-     */
-    public long getPendingCount() {
-        return Todo.count("completed", false);
-    }
-   
+  
     /**
      * Helper method to find todo by ID and handle not found case
      * @param id Todo ID as string
