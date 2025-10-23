@@ -39,7 +39,6 @@ export class TodoPage implements OnInit {
 
   ngOnInit() {
     this.loadTodos();
-    // Test backend connectivity
     this.todoService.testBackend().subscribe({
       next: (response) => console.log('Backend test successful:', response),
       error: (error) => console.error('Backend test failed:', error),
@@ -74,7 +73,6 @@ export class TodoPage implements OnInit {
   private applyCurrentFilter() {
     let filtered = [...this.todos()];
 
-    // Apply status filter
     switch (this.currentFilter.status) {
       case 'active':
         filtered = filtered.filter((todo) => !todo.completed);
@@ -84,11 +82,9 @@ export class TodoPage implements OnInit {
         break;
       case 'all':
       default:
-        // Show all todos
         break;
     }
 
-    // Apply priority filter
     if (this.currentFilter.priority) {
       filtered = filtered.filter(
         (todo) => todo.priority === this.currentFilter.priority
